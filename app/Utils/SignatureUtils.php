@@ -5,6 +5,17 @@ class SignatureUtils {
         ksort($obj);
         $queryStrArr = [];
         foreach ($obj as $key => $value) {
+            if (in_array($value, ["undefined", "null"]) || gettype($value) == "NULL") {
+                $value = "";
+            }
+
+            if (is_array($value)) {
+                $valueSortedElementObj = array_map(function ($ele) {
+                    ksort($ele);
+                    return $ele;
+                }, $value);
+                $value = json_encode($valueSortedElementObj);
+            }
             $queryStrArr[] = $key . "=" . $value;
         }
         $queryStr = implode("&", $queryStrArr);

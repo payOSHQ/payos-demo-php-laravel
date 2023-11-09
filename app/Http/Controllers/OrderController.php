@@ -8,8 +8,15 @@ use SignatureUtils;
 
 class OrderController extends Controller
 {
-    //
-    public function __construct() { }
+    private string $payOSClientId;
+    private string $payOSApiKey;
+    private string $payOSChecksumKey;
+
+    public function __construct() { 
+        $this->payOSClientId = env('PAYOS_CLIENT_ID');
+        $this->payOSApiKey = env('PAYOS_API_KEY');
+        $this->payOSChecksumKey = env('PAYOS_CHECKSUM_KEY');
+    }
 
     public function createOrder(Request $request) {
         $body = json_decode($request->getContent(), true);
@@ -23,21 +30,17 @@ class OrderController extends Controller
 
         $body["orderCode"] = intval(substr(strval(microtime(true) * 10000), -6));
 
-        $PAYOS_CLIENT_ID = env('PAYOS_CLIENT_ID');
-        $PAYOS_API_KEY = env('PAYOS_API_KEY');
-        $PAYOS_CHECKSUM_KEY = env('PAYOS_CHECKSUM_KEY');
-
-        $paymentRequestSignature = SignatureUtils::createSignaturePaymentRequest($PAYOS_CHECKSUM_KEY, $body);
+        $paymentRequestSignature = SignatureUtils::createSignaturePaymentRequest($this->payOSChecksumKey, $body);
         $body["signature"] = $paymentRequestSignature;
         
         try {
             $response = Http::withHeaders([
-                "x-client-id" => $PAYOS_CLIENT_ID,
-                "x-api-key" => $PAYOS_API_KEY
+                "x-client-id" => $this->payOSClientId,
+                "x-api-key" => $this->payOSApiKey
             ])->post("https://api-merchant.payos.vn/v2/payment-requests", $body)->json();
 
             // Check response data integrity
-            $responseDataSignature = SignatureUtils::createSignatureFromObj($PAYOS_CHECKSUM_KEY, $response["data"]);
+            $responseDataSignature = SignatureUtils::createSignatureFromObj($this->payOSChecksumKey, $response["data"]);
             if ($responseDataSignature != $response["signature"]) {
                 return response()->json([
                     "error" => -1,
@@ -45,6 +48,7 @@ class OrderController extends Controller
                     "data" => null
                 ]);
             }
+
             return response()->json([
                 "error" => 0,
                 "message" => "Ok",
@@ -71,6 +75,69 @@ class OrderController extends Controller
             // #Ensure to close curl
             // curl_close($paymentRequest);
             // $response = json_decode($response, true);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                "error" => -1,
+                "message" => "Error",
+                "data" => null
+            ]);
+        }
+    }
+
+    public function getPaymentLinkInfoOfOrder(string $id) {
+        try {
+            $response = Http::withHeaders([
+                "x-client-id" => $this->payOSClientId,
+                "x-api-key" => $this->payOSApiKey
+            ])->get("https://api-merchant.payos.vn/v2/payment-requests/{$id}")->json();
+
+            $responseDataSignature = SignatureUtils::createSignatureFromObj($this->payOSChecksumKey, $response["data"]);
+            if ($responseDataSignature != $response["signature"]) {
+                return response()->json([
+                    "error" => -1,
+                    "message" => "Signature not match",
+                    "data" => null
+                ]);
+            }
+            return response()->json([
+                "error" => 0,
+                "message" => "Ok",
+                "data" => $response["data"]
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                "error" => -1,
+                "message" => "Error",
+                "data" => null
+            ]);
+        }
+    }
+
+    public function cancelPaymentLinkOfOrder(Request $request, String $id) {
+        $body = json_decode($request->getContent(), true);
+
+        try {
+            $cancelBody = is_array($body) && $body["cancellationReason"] ? $body : null;
+            $response = Http::withHeaders([
+                "x-client-id" => $this->payOSClientId,
+                "x-api-key" => $this->payOSApiKey
+                ])->post("https://api-merchant.payos.vn/v2/payment-requests/{$id}/cancel", $cancelBody)->json();
+                
+            $responseDataSignature = SignatureUtils::createSignatureFromObj($this->payOSChecksumKey, $response["data"]);
+            if ($responseDataSignature != $response["signature"]) {
+                return response()->json([
+                    "error" => -1,
+                    "message" => "Signature not match",
+                    "data" => null
+                ]);
+            }
+            return response()->json([
+                "error" => 0,
+                "message" => "Ok",
+                "data" => $response["data"]
+            ]);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json([

@@ -32,8 +32,8 @@ Route::post('/create-payment-link', [CheckoutController::class, 'createPaymentLi
 
 Route::prefix('/order')->group(function () {
     Route::post('/create', [OrderController::class, 'createOrder']);
-    Route::get('/{orderId}', [OrderController::class, 'getPaymentLinkInfoOfOrder']);
-    Route::put('/{orderId}', [OrderController::class, 'cancelPaymentLinkOfOrder']);
+    Route::get('/{id}', [OrderController::class, 'getPaymentLinkInfoOfOrder']);
+    Route::put('/{id}', [OrderController::class, 'cancelPaymentLinkOfOrder']);
 });
 
 Route::prefix('/payment')->group(function () { 
