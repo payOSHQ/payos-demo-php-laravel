@@ -5,6 +5,11 @@
 ## Run project
 Create an `.env` file by cloning the `.env.example` file. Fill in the `PAYOS_CLIENT_ID`, `PAYOS_API_KEY`, `PAYOS_CHECKSUM_KEY` fields with the payment channel information you created on the [payOS](https://my.payos.vn).
 
+Install dependencies by command:
+```sh
+./composer.phar i
+```
+
 Run this command:
 ```sh
 php artisan serve
