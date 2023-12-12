@@ -13,7 +13,7 @@ class CheckoutController extends Controller
     public function __construct() { }
 
     public function createPaymentLink(Request $request) {
-        $YOUR_DOMAIN = "http://localhost:8080";
+        $YOUR_DOMAIN = "http://localhost:8000";
         $data = [
             "orderCode" => intval(substr(strval(microtime(true) * 10000), -6)),
             "amount" => 1000,
