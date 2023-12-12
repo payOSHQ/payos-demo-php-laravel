@@ -1,6 +1,6 @@
 # Instructions
 ## Requirements
-* Installed PHP version 8
+* Installed PHP version >= 8.1
 * Created [payOS](https://my.payos.vn) payment channel
 ## Run project
 Create an `.env` file by cloning the `.env.example` file. Fill in the `PAYOS_CLIENT_ID`, `PAYOS_API_KEY`, `PAYOS_CHECKSUM_KEY` fields with the payment channel information you created on the [payOS](https://my.payos.vn).
