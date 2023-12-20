@@ -20,3 +20,5 @@ Visit http://localhost:8000 to access the demo page using payOS payment method i
 In addition to the demo page using payOS payment method, we also implemented some API to call from client and webhook to process data received from payOS.
 
 APIs are implemented in the `app/Http/Controllers/OrderController.php` file. Webhook is implemented in the `app/Http/Controllers/PaymentController.php` file. Routes of APIs and Webhook are declared in the `routes/web.php` file.
+
+Update: use payos-lib-php
