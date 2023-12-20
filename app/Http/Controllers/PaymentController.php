@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SignatureUtils;
+use PayOS\PayOS;
 
 class PaymentController extends Controller
 {
     //
-    public function handlePayOSWebhook(Request $request) {
+    public function handlePayOSWebhook(Request $request)
+    {
         $body = json_decode($request->getContent(), true);
         // Handle webhook test
         if (in_array($body["data"]["description"], ["Ma giao dich thu nghiem", "VQRIO123"])) {
@@ -21,16 +22,13 @@ class PaymentController extends Controller
 
         // Check webhook data integrity 
         $PAYOS_CHECKSUM_KEY = env('PAYOS_CHECKSUM_KEY');
-        $webhookDataSignature = SignatureUtils::createSignatureFromObj($PAYOS_CHECKSUM_KEY, $body["data"]);
-        if ($webhookDataSignature != $body["signature"]) {
-            return response()->json([
-                "error" => -1,
-                "message" => "Signature not match",
-                "data" => null
-            ], 403);
-        }
+        $PAYOS_CLIENT_ID = env('PAYOS_CLIENT_ID');
+        $PAYOS_API_KEY = env('PAYOS_API_KEY');
 
         $webhookData = $body["data"];
+        $payOS = new PayOS($PAYOS_CLIENT_ID, $PAYOS_API_KEY, $PAYOS_CHECKSUM_KEY);
+        $payOS->verifyPaymentWebhookData($webhookData);
+
         /**
          * Source code uses data of webhook
          * ....

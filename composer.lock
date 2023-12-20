@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "74042818a6a81365e1d6ade7517aaa40",
     "packages": [
         {
             "name": "brick/math",
@@ -2314,6 +2314,50 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "payos/payos",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/payOSHQ/payos-lib-php.git",
+                "reference": "c018328ef66d6db163bc22f47f89fac30df10b38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/payOSHQ/payos-lib-php/zipball/c018328ef66d6db163bc22f47f89fac30df10b38",
+                "reference": "c018328ef66d6db163bc22f47f89fac30df10b38",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PayOS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "locbt"
+                }
+            ],
+            "description": "A payOS package for PHP",
+            "keywords": [
+                "payment",
+                "payos",
+                "payos package"
+            ],
+            "support": {
+                "issues": "https://github.com/payOSHQ/payos-lib-php/issues",
+                "source": "https://github.com/payOSHQ/payos-lib-php/tree/v0.0.1"
+            },
+            "time": "2023-12-19T09:11:24+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -8077,5 +8121,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
