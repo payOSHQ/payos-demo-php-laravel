@@ -21,4 +21,5 @@ In addition to the demo page using payOS payment method, we also implemented som
 
 APIs are implemented in the `app/Http/Controllers/OrderController.php` file. Webhook is implemented in the `app/Http/Controllers/PaymentController.php` file. Routes of APIs and Webhook are declared in the `routes/web.php` file.
 
-Update: use payos-lib-php
+## References
+https://stackoverflow.com/questions/44839648/no-application-encryption-key-has-been-specified
