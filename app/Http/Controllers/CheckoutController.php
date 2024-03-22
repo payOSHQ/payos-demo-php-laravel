@@ -30,7 +30,7 @@ class CheckoutController extends Controller
         try {
             $response = $payOS->createPaymentLink($data);
             return redirect($response['checkoutUrl']);
-            // $response = $payOS->getPaymentLinkInfomation($data['orderCode']);
+            // $response = $payOS->getPaymentLinkInformation($data['orderCode']);
             // return $response;
         } catch (\Throwable $th) {
             return $th->getMessage();

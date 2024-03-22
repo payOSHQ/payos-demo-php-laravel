@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74042818a6a81365e1d6ade7517aaa40",
+    "content-hash": "ae297401fbcd4a883c79daf017132aa9",
     "packages": [
         {
             "name": "brick/math",
@@ -2393,16 +2393,16 @@
         },
         {
             "name": "payos/payos",
-            "version": "0.0.1",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/payOSHQ/payos-lib-php.git",
-                "reference": "c018328ef66d6db163bc22f47f89fac30df10b38"
+                "reference": "e565693fd24ff7dd73cdd47ec07a8316a6dc8516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/payOSHQ/payos-lib-php/zipball/c018328ef66d6db163bc22f47f89fac30df10b38",
-                "reference": "c018328ef66d6db163bc22f47f89fac30df10b38",
+                "url": "https://api.github.com/repos/payOSHQ/payos-lib-php/zipball/e565693fd24ff7dd73cdd47ec07a8316a6dc8516",
+                "reference": "e565693fd24ff7dd73cdd47ec07a8316a6dc8516",
                 "shasum": ""
             },
             "require": {
@@ -2431,9 +2431,9 @@
             ],
             "support": {
                 "issues": "https://github.com/payOSHQ/payos-lib-php/issues",
-                "source": "https://github.com/payOSHQ/payos-lib-php/tree/v0.0.1"
+                "source": "https://github.com/payOSHQ/payos-lib-php/tree/v1.0.4"
             },
-            "time": "2023-12-19T09:11:24+00:00"
+            "time": "2024-03-22T03:49:32+00:00"
         },
         {
             "name": "phpoption/phpoption",
