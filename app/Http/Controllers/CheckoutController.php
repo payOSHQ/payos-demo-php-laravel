@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PayOS\PayOS;
 
 class CheckoutController extends Controller
 {
-    public function __construct()
+    public function createPaymentLink(Request $request)
     {
-    }
-
-    public function createPaymentLink(Request $request) {
-        $YOUR_DOMAIN = "http://localhost:8000";
+        $YOUR_DOMAIN = $request->getSchemeAndHttpHost();
         $data = [
             "orderCode" => intval(substr(strval(microtime(true) * 10000), -6)),
             "amount" => 2000,
@@ -21,18 +17,12 @@ class CheckoutController extends Controller
             "cancelUrl" => $YOUR_DOMAIN . "/cancel.html"
         ];
         error_log($data['orderCode']);
-        $PAYOS_CLIENT_ID = env('PAYOS_CLIENT_ID');
-        $PAYOS_API_KEY = env('PAYOS_API_KEY');
-        $PAYOS_CHECKSUM_KEY = env('PAYOS_CHECKSUM_KEY');
 
-        $payOS = new PayOS($PAYOS_CLIENT_ID, $PAYOS_API_KEY, $PAYOS_CHECKSUM_KEY);
         try {
-            $response = $payOS->createPaymentLink($data);
+            $response = $this->payOS->createPaymentLink($data);
             return redirect($response['checkoutUrl']);
-            // $response = $payOS->getPaymentLinkInformation($data['orderCode']);
-            // return $response;
         } catch (\Throwable $th) {
-            return $th->getMessage();
+            return $this->handleException($th);
         }
     }
 }
