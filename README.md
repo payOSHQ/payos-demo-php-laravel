@@ -1,38 +1,41 @@
-# Instructions
+# payOS Demo Laravel Application
 
-## Requirements
+This is a demo Laravel application integrate with payOS API base on template [`laravel/react-starter-kit`](https://github.com/laravel/react-starter-kit).
 
--   Installed PHP version >= 8.1
--   Created [payOS](https://my.payos.vn) payment channel
+## Prerequisites
 
-## Run project
+- PHP >= 8.2
+- Composer
+- payOS credentials for payment-requests or payouts
 
-Create an `.env` file by cloning the `.env.example` file. Fill in the `PAYOS_CLIENT_ID`, `PAYOS_API_KEY`, `PAYOS_CHECKSUM_KEY` fields with the payment channel information you created on the [payOS](https://my.payos.vn).
+## How to Run the Application
 
-Install dependencies by command:
+```bash
+composer run setup
 
-```sh
-php ./composer.phar i
+# fill the required environment variables in the .env file
+
+composer run dev
 ```
 
-Before run the project, you need to generate the application key by running the following command:
+The application will be accessible at `http://localhost:8000`.
 
-```sh
-php artisan key:generate
-```
+## Features
 
-Run this command:
+- [OrderController](./app/Http/Controllers/Payment/OrderController.php): Implement payment-requests API.
 
-```sh
-php artisan serve
-```
+    ```bash
+    php artisan route:list --name=api.payment.orders
+    ```
 
-Visit http://localhost:8000 to access the demo page using payOS payment method implemented in PHP.
+- [WebhookController](./app/Http/Controllers/Payment/WebhookController.php): Handle payment webhooks.
 
-In addition to the demo page using payOS payment method, we also implemented some API to call from client and webhook to process data received from payOS.
+    ```bash
+    php artisan route:list --name=api.payment.webhooks
+    ```
 
-APIs are implemented in the `app/Http/Controllers/OrderController.php` file. Webhook is implemented in the `app/Http/Controllers/PaymentController.php` file. Routes of APIs and Webhook are declared in the `routes/web.php` file.
+- [TransferController](./app/Http/Controllers/Payment/TransferController.php): Implement payouts API.
 
-## References
-
-https://stackoverflow.com/questions/44839648/no-application-encryption-key-has-been-specified
+    ```bash
+    php artisan route:list --name=api.payment.transfers
+    ```
